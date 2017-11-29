@@ -35,25 +35,44 @@ def game():
         print(result)
 
 
-def putPiece(board, player): #Needs exception handling
-    ok = False
-    while not ok:
+def putPiece(board, player):
+    okPosition = False
+    okRow =False
+    okColumn=False
+
+    while not okPosition:
         print('Player {} please introduce row and column for your move'.format(player))
 
-        row =  int(input('Row (1-3):'))-1
-        while not 0<=row<=2:
-            row = int(input('Wrong number. Row (1-3):')) -1
+        while not okRow:
+            try:
+                row =  int(input('Row (1-3):'))-1
+                if not 0<=row<=2:
+                    print('Wrong number.')
+                    okRow=False
+                else:
+                    okRow = True
+            except ValueError:
+                print('Input a number please')
+                okRow=False
 
-        column = int(input('Column (1-3):'))-1
-        while not 0<=column<=2:
-            column = int(input('Wrong number. Column (1-3):')) -1
+        while not okColumn:
+            try:
+                column = int(input('Column (1-3):'))-1
+                if not 0<=column<=2:
+                    print('Wrong number.')
+                    okColumn=False
+                else:
+                    okColumn=True
+            except ValueError:
+                print('Input a number please')
+                okColumn = False
 
         if board[row][column]==0:
             board[row][column]=player
-            ok = True
+            okPosition = True
         else:
             print("You can't put a piece there. Select another position.")
-            ok = False
+            okPosition = False
 
 def checkResult(board):
     from collections import Counter
@@ -101,3 +120,4 @@ def checkResult(board):
 
 #mainProgram
 game()
+
